@@ -1,8 +1,15 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
+
+export const viewport: Viewport = {
+  themeColor: '#f97316',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+}
 
 export const metadata: Metadata = {
   title: 'Urja — Take Control of Your Energy',
@@ -10,8 +17,6 @@ export const metadata: Metadata = {
   keywords: ['self improvement', 'discipline', 'NoFap', 'brahmacharya', 'habit tracker', 'urja', 'self control', 'Indian youth'],
   authors: [{ name: 'Urja Team' }],
   manifest: '/manifest.json',
-  themeColor: '#f97316',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
   openGraph: {
     title: 'Urja — Take Control of Your Energy',
     description: 'Build discipline, track your streaks, and transform your life.',
@@ -30,6 +35,8 @@ export const metadata: Metadata = {
   },
 }
 
+import PWARegister from '@/components/PWARegister'
+
 export default function RootLayout({
   children,
 }: {
@@ -45,6 +52,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
       </head>
       <body className={`${inter.className} bg-black text-white min-h-screen`}>
+        <PWARegister />
         {children}
       </body>
     </html>
