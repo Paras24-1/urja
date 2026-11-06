@@ -212,12 +212,9 @@ CREATE POLICY "Users can insert their own profile" ON public.profiles FOR INSERT
 CREATE POLICY "Users can update their own profile" ON public.profiles FOR UPDATE USING (auth.uid() = id);
 
 -- Streaks policies
-CREATE POLICY "Users can view their own streak" ON public.streaks FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Streaks visible for leaderboard and user" ON public.streaks FOR SELECT USING (true);
 CREATE POLICY "Users can insert their own streak" ON public.streaks FOR INSERT WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "Users can update their own streak" ON public.streaks FOR UPDATE USING (auth.uid() = user_id);
-
--- Leaderboard: allow viewing streaks for leaderboard
-CREATE POLICY "Streaks visible for leaderboard" ON public.streaks FOR SELECT USING (true);
 
 -- Journals policies
 CREATE POLICY "Users can CRUD their own journals" ON public.journals FOR ALL USING (auth.uid() = user_id);
@@ -267,15 +264,19 @@ CREATE POLICY "Users can update their own buddy pairs" ON public.buddy_pairs FOR
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO public.profiles (id, username, display_name)
+  INSERT INTO public.profiles (id, username, display_name, age_group, motivation)
   VALUES (
     new.id,
-    split_part(new.email, '@', 1) || '_' || substr(gen_random_uuid()::text, 1, 4),
-    split_part(new.email, '@', 1)
-  );
+    COALESCE(new.raw_user_meta_data->>'username', split_part(new.email, '@', 1) || '_' || substr(gen_random_uuid()::text, 1, 4)),
+    COALESCE(new.raw_user_meta_data->>'username', split_part(new.email, '@', 1)),
+    new.raw_user_meta_data->>'age_group',
+    new.raw_user_meta_data->>'motivation'
+  )
+  ON CONFLICT (id) DO NOTHING;
   
   INSERT INTO public.streaks (user_id)
-  VALUES (new.id);
+  VALUES (new.id)
+  ON CONFLICT (user_id) DO NOTHING;
   
   RETURN new;
 END;
