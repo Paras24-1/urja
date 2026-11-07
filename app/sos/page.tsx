@@ -247,6 +247,15 @@ export default function SOSPage() {
   const [activeTechnique, setActiveTechnique] = useState<string | null>(null)
   const [urgeDone, setUrgeDone] = useState(false)
   const [quoteIndex] = useState(Math.floor(Math.random() * emergencyQuotes.length))
+  const [user, setUser] = useState<any>(null)
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      setUser(data.user)
+    })
+  }, [])
+
+  const backHref = user ? '/dashboard' : '/'
 
   const handleResisted = async (technique: string) => {
     const { data: { user } } = await supabase.auth.getUser()
@@ -280,8 +289,8 @@ export default function SOSPage() {
             <div className="text-green-400 font-semibold">+100 XP Earned 🏆</div>
             <div className="text-sm text-white/50 mt-1">Urge Resisted Badge Progress</div>
           </div>
-          <Link href="/dashboard" className="btn-primary flex items-center justify-center gap-2">
-            Back to Dashboard 🔥
+          <Link href={backHref} className="btn-primary flex items-center justify-center gap-2">
+            {user ? 'Back to Dashboard 🔥' : 'Back to Home 🔥'}
           </Link>
         </div>
       </div>
@@ -339,8 +348,9 @@ export default function SOSPage() {
       {/* Header */}
       <div className="glass-card border-x-0 border-t-0 rounded-none px-4 py-4 sticky top-0 z-40 border-red-500/20 bg-red-500/5">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
-          <Link href="/dashboard" className="text-white/50 hover:text-white">
-            <ArrowLeft size={20} />
+          <Link href={backHref} className="text-white/50 hover:text-white flex items-center gap-1 text-xs font-semibold">
+            <ArrowLeft size={18} />
+            <span>{user ? 'Dashboard' : 'Home'}</span>
           </Link>
           <div className="text-center">
             <div className="font-black text-red-400 text-lg">🚨 SOS MODE</div>

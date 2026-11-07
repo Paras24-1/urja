@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import BottomNav from '@/components/layout/BottomNav'
-import { Plus, Heart, MessageCircle, ChevronRight, ArrowLeft, Send, Filter, Flame } from 'lucide-react'
+import { Plus, Heart, MessageCircle, ChevronRight, ArrowLeft, Send, Filter, Flame, Home } from 'lucide-react'
 import { timeAgo } from '@/lib/utils'
 import Link from 'next/link'
 
@@ -224,21 +224,34 @@ export default function CommunityPage() {
   return (
     <div className="min-h-screen pb-28">
       {/* Header */}
-      <div className="glass-card border-x-0 border-t-0 rounded-none px-4 py-4 sticky top-0 z-40">
+      <div className="glass-card border-x-0 border-t-0 rounded-none px-4 py-4 sticky top-0 z-40 bg-[#0a0c10]/95 backdrop-blur-xl border-b border-white/[0.08]">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
           <div>
-            <h1 className="font-black text-lg">Community</h1>
+            <h1 className="font-black text-lg text-white">Community</h1>
             <p className="text-xs text-white/40">Anonymous. Safe. Supportive.</p>
           </div>
-          {user && (
-            <button
-              onClick={() => setShowNewPost(true)}
-              className="btn-primary py-2 px-4 text-sm flex items-center gap-1.5"
-            >
-              <Plus size={16} />
-              Post
-            </button>
-          )}
+          <div className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl bg-white/[0.05] border border-white/10 text-white/60 hover:text-white transition-all">
+              <Home size={14} />
+              <span>Home</span>
+            </Link>
+            {user ? (
+              <button
+                onClick={() => setShowNewPost(true)}
+                className="btn-primary py-1.5 px-3.5 text-xs font-bold flex items-center gap-1.5"
+              >
+                <Plus size={15} />
+                <span>Post</span>
+              </button>
+            ) : (
+              <Link
+                href="/auth/login?next=/community"
+                className="btn-primary py-1.5 px-3.5 text-xs font-bold flex items-center gap-1.5"
+              >
+                <span>Login to Post</span>
+              </Link>
+            )}
+          </div>
         </div>
       </div>
 

@@ -107,10 +107,10 @@ export default function DashboardClient({
       <div className="glass-card border-x-0 border-t-0 rounded-none px-4 py-4 sticky top-0 z-40">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
           <div>
-            <div className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2 group hover:opacity-90 transition-opacity">
               <span className="text-lg">🔥</span>
               <span className="font-black gradient-text">URJA</span>
-            </div>
+            </Link>
             <p className="text-xs text-white/40">Hey, {profile?.username || 'Warrior'} 👋</p>
           </div>
           <div className="flex items-center gap-3">

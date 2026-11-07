@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import BottomNav from '@/components/layout/BottomNav'
-import { BookOpen, Smile, Zap, Brain, ChevronDown, ChevronUp, Sun, Moon, Heart } from 'lucide-react'
+import { BookOpen, Smile, Zap, Brain, ChevronDown, ChevronUp, Sun, Moon, Heart, Home } from 'lucide-react'
+import Link from 'next/link'
 
 export default function JournalPage() {
   const supabase = createClient()
@@ -102,7 +103,7 @@ export default function JournalPage() {
       <div className="glass-card border-x-0 border-t-0 rounded-none px-4 py-4 sticky top-0 z-40">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
           <div>
-            <h1 className="font-black text-lg flex items-center gap-2">
+            <h1 className="font-black text-lg flex items-center gap-2 text-white">
               <BookOpen size={18} className="text-purple-400" />
               Journal
             </h1>
@@ -110,17 +111,23 @@ export default function JournalPage() {
               {new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' })}
             </p>
           </div>
-          {isEvening ? (
-            <div className="flex items-center gap-1 text-xs text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/20">
-              <Moon size={12} />
-              Evening Check-in
-            </div>
-          ) : (
-            <div className="flex items-center gap-1 text-xs text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
-              <Sun size={12} />
-              Morning Check-in
-            </div>
-          )}
+          <div className="flex items-center gap-2.5">
+            <Link href="/" className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl bg-white/[0.05] border border-white/10 text-white/60 hover:text-white transition-all">
+              <Home size={14} />
+              <span>Home</span>
+            </Link>
+            {isEvening ? (
+              <div className="flex items-center gap-1 text-xs text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/20">
+                <Moon size={12} />
+                Evening
+              </div>
+            ) : (
+              <div className="flex items-center gap-1 text-xs text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
+                <Sun size={12} />
+                Morning
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

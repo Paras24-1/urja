@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import BottomNav from '@/components/layout/BottomNav'
-import { BookOpen, ExternalLink, ChevronRight, Brain, Heart, Flame, Leaf, Zap } from 'lucide-react'
+import { BookOpen, ExternalLink, ChevronRight, Brain, Heart, Flame, Leaf, Zap, Home } from 'lucide-react'
+import Link from 'next/link'
 
 const articles = [
   {
@@ -288,13 +289,19 @@ export default function LearnPage() {
   return (
     <div className="min-h-screen pb-28">
       {/* Header */}
-      <div className="glass-card border-x-0 border-t-0 rounded-none px-4 py-4 sticky top-0 z-40">
-        <div className="max-w-2xl mx-auto">
-          <h1 className="font-black text-lg flex items-center gap-2">
-            <BookOpen size={18} className="text-green-400" />
-            Learn
-          </h1>
-          <p className="text-xs text-white/40">Science, spirituality & practical tools</p>
+      <div className="glass-card border-x-0 border-t-0 rounded-none px-4 py-4 sticky top-0 z-40 bg-[#0a0c10]/95 backdrop-blur-xl border-b border-white/[0.08]">
+        <div className="max-w-2xl mx-auto flex items-center justify-between">
+          <div>
+            <h1 className="font-black text-lg flex items-center gap-2 text-white">
+              <BookOpen size={18} className="text-emerald-400" />
+              Learn Academy
+            </h1>
+            <p className="text-xs text-white/40">Vedic science, neuroplasticity & recovery</p>
+          </div>
+          <Link href="/" className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl bg-white/[0.05] border border-white/10 text-white/60 hover:text-white transition-all">
+            <Home size={14} />
+            <span>Home</span>
+          </Link>
         </div>
       </div>
 

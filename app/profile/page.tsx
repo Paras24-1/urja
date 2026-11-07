@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import BottomNav from '@/components/layout/BottomNav'
-import { User, Settings, LogOut, Globe, Bell, Shield, ChevronRight, Edit2, Save, Flame } from 'lucide-react'
+import { User, Settings, LogOut, Globe, Bell, Shield, ChevronRight, Edit2, Save, Flame, Home } from 'lucide-react'
 import { getLevelFromXP, getXPForNextLevel, getStreakEmoji, getStreakTitle } from '@/lib/utils'
 import Link from 'next/link'
 
@@ -77,15 +77,21 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen pb-28">
       {/* Header */}
-      <div className="glass-card border-x-0 border-t-0 rounded-none px-4 py-4 sticky top-0 z-40">
+      <div className="glass-card border-x-0 border-t-0 rounded-none px-4 py-4 sticky top-0 z-40 bg-[#0a0c10]/95 backdrop-blur-xl border-b border-white/[0.08]">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
-          <h1 className="font-black text-lg">Profile</h1>
-          <button
-            onClick={() => setEditing(!editing)}
-            className="text-sm text-orange-400 hover:text-orange-300 flex items-center gap-1"
-          >
-            {editing ? <><Save size={14} /> Done</> : <><Edit2 size={14} /> Edit</>}
-          </button>
+          <h1 className="font-black text-lg text-white">Warrior Profile</h1>
+          <div className="flex items-center gap-2.5">
+            <Link href="/" className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl bg-white/[0.05] border border-white/10 text-white/60 hover:text-white transition-all">
+              <Home size={14} />
+              <span>Home</span>
+            </Link>
+            <button
+              onClick={() => setEditing(!editing)}
+              className="text-xs font-bold px-3 py-1.5 rounded-xl bg-orange-500/10 border border-orange-500/30 text-orange-400 hover:bg-orange-500/20 transition-all flex items-center gap-1"
+            >
+              {editing ? <><Save size={13} /> Save</> : <><Edit2 size={13} /> Edit</>}
+            </button>
+          </div>
         </div>
       </div>
 

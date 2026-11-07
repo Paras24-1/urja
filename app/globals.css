@@ -103,22 +103,49 @@ body {
 
 .input-field {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 0.75rem;
-  padding: 0.75rem 1rem;
-  color: white;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  color: #ffffff !important;
   width: 100%;
+  font-size: 0.95rem;
   transition: all 0.2s;
   outline: none;
 }
 
 .input-field::placeholder {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.35);
 }
 
 .input-field:focus {
-  border-color: rgba(249, 115, 22, 0.5);
-  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(249, 115, 22, 0.6);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+}
+
+/* Icon padding modifiers with guaranteed precedence */
+.input-with-icon-left {
+  padding-left: 2.75rem !important;
+}
+
+.input-with-icon-right {
+  padding-right: 2.75rem !important;
+}
+
+/* Prevent Chrome / Safari / Edge autofill from hiding text on dark backgrounds */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active,
+textarea:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #141720 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
+  caret-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .stat-card {

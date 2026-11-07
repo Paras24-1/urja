@@ -28,20 +28,23 @@ export async function middleware(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser()
 
-  // Protected routes
-  const protectedPaths = ['/dashboard', '/sos', '/community', '/learn', '/achievements', '/journal', '/leaderboard', '/profile']
+  // Protected routes that strictly require authentication
+  const protectedPaths = ['/dashboard', '/journal', '/profile']
   const isProtected = protectedPaths.some(path => request.nextUrl.pathname.startsWith(path))
 
   if (!user && isProtected) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth/login'
+    url.searchParams.set('next', request.nextUrl.pathname)
     return NextResponse.redirect(url)
   }
 
   // Redirect logged-in users away from auth pages
   if (user && (request.nextUrl.pathname.startsWith('/auth/login') || request.nextUrl.pathname.startsWith('/auth/register'))) {
+    const next = request.nextUrl.searchParams.get('next') || '/dashboard'
     const url = request.nextUrl.clone()
-    url.pathname = '/dashboard'
+    url.pathname = next
+    url.search = ''
     return NextResponse.redirect(url)
   }
 
